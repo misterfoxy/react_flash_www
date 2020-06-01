@@ -18,9 +18,17 @@ export default function FlashCard(props){
         setCards([...cards, newCard])
     }
 
-    const saveCollection = () => {
+    const saveCollection = async (collectionData={}) => {
         // submit array of flashcards and collection name
         // batch upload to mongo database with one foreign key to parent and all cards as children
+        const response = await fetch(`http://127.0.0.1:4000/flashcards/new`, {
+            method: 'POST',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify(collectionData)
+         
+        })
+
+         return response.json()
     }
 
     return(
@@ -45,6 +53,20 @@ export default function FlashCard(props){
                     </div>
             })}
         </div>
+        <button onClick={()=>saveCollection(
+            {title:props.title,
+                flashcards: [
+                    ...cards
+                ]
+            
+            }).then(data => {
+                console.log(data)
+            })
+            .catch(err => {
+                alert(err)
+            })
+            
+            }>Click to Save</button>
         <style jsx>{`
    .card {
     margin: 1.5rem;
