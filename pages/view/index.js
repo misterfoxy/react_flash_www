@@ -1,46 +1,19 @@
-import Head from 'next/head'
+import {useState, useEffect} from 'react'
+import CollectionContainer from '../../components/view/CollectionContainer'
+function View({data}){
 
-export default function Home() {
-  return (
-    <div className="container">
-      <Head>
-        <title>Study Fox</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    
+  
+    return(
+        <>
+        <main>
 
-      <main>
-        <h1 className="title">
-          Welcome to <a href="https://michaelscottfox.com">Study Fox!</a>
-        </h1>
+        <CollectionContainer collections={data.data} />
 
 
-        <div className="grid">
-          <a href="/create" className="card">
-            <h3>Create Collection &rarr;</h3>
-            <p>Create a new collection of flashcards</p>
-          </a>
 
-          <a href="/view" className="card">
-            <h3>View Collections &rarr;</h3>
-            <p>Try out a flashcard collection.</p>
-          </a>
-
-         
-        </div>
-      </main>
-
-      <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className="logo" />
-        </a>
-      </footer>
-
-      <style jsx>{`
+        </main>
+         <style jsx>{`
         .container {
           min-height: 100vh;
           padding: 0 0.5rem;
@@ -171,20 +144,17 @@ export default function Home() {
         }
       `}</style>
 
-      <style jsx global>{`
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-            sans-serif;
-        }
-
-        * {
-          box-sizing: border-box;
-        }
-      `}</style>
-    </div>
-  )
+        </>
+    )
 }
+
+export async function getServerSideProps(ctx){
+
+  const res = await fetch(`http://127.0.0.1:4000/flashcards`)
+  const data = await res.json()
+
+  return {props: {data}}
+
+}
+
+export default View

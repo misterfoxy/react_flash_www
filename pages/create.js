@@ -1,46 +1,42 @@
-import Head from 'next/head'
+import {useState, useEffect} from 'react'
+import FlashCard from '../components/create/flashcard'
+export default function Create(){
 
-export default function Home() {
-  return (
-    <div className="container">
-      <Head>
-        <title>Study Fox</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main>
-        <h1 className="title">
-          Welcome to <a href="https://michaelscottfox.com">Study Fox!</a>
-        </h1>
+    const [title, setTitle] = useState('')
+    const [creatingCards, setCreatingCards] = useState(false)
 
 
-        <div className="grid">
-          <a href="/create" className="card">
-            <h3>Create Collection &rarr;</h3>
-            <p>Create a new collection of flashcards</p>
-          </a>
+    const createCollection = (e) =>{
+        e.preventDefault();
 
-          <a href="/view" className="card">
-            <h3>View Collections &rarr;</h3>
-            <p>Try out a flashcard collection.</p>
-          </a>
+        setCreatingCards(true)
 
-         
-        </div>
-      </main>
+    }
 
-      <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className="logo" />
-        </a>
-      </footer>
 
-      <style jsx>{`
+    return(
+        <div className="container">
+            <main>
+                <h1 className="title">Create</h1>
+                {creatingCards === false &&
+                    <div>
+                    <form action="/api/new" onSubmit={createCollection}>
+                        <label htmlFor="title">
+                            <input id="title" value={title} onChange={(e) => setTitle(e.target.value)}/>
+                        </label>
+
+                        <button type="submit">Create New Cards</button>
+                    </form>
+                </div>}
+                {creatingCards !== false &&
+                <div>
+                    
+
+                        <FlashCard title={title} />
+
+                </div>}
+            </main>
+            <style jsx>{`
         .container {
           min-height: 100vh;
           padding: 0 0.5rem;
@@ -171,20 +167,7 @@ export default function Home() {
         }
       `}</style>
 
-      <style jsx global>{`
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-            sans-serif;
-        }
 
-        * {
-          box-sizing: border-box;
-        }
-      `}</style>
-    </div>
-  )
+        </div>
+    )
 }
