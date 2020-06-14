@@ -67,33 +67,7 @@ export default function FlashCard(props){
             })
             
             }>Click to Save</button>
-        <style jsx>{`
-   .card {
-    margin: 1.5rem;
-    flex-basis: 45%;
-    padding: 1.5rem;
-    text-align: left;
-    color: inherit;
-    text-decoration: none;
-    border: 1px solid #eaeaea;
-    border-radius: 10px;
-    transition: color 0.15s ease, border-color 0.15s ease;
-  }
-
-  .card-front{
-    font-size: 16px;
-    font-family: sans-serif;
-  }
-  .card-back{
-    color: gray;
-    font-size: 22px;
-    font-family: Helvetica, sans-serif;
-}
-
-
-        
-        `}
-        </style>
+      
         </>
     )
 }
